@@ -96,6 +96,6 @@ import { LayoutDashboard, Users, Store, User, Building } from 'lucide-vue-next';
 }
 
 .nav-item.router-link-active {
-  color: #409eff; /* Element Plus primary color */
+  color: #f97316; /* Orange color */
 }
 </style>

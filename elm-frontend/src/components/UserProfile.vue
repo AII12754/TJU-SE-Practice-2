@@ -2,7 +2,9 @@
   <div class="user-profile-container" v-loading="loading">
     <!-- User Info Header -->
     <div class="user-info-header">
-      <el-avatar :size="80" :src="userForm.photo" icon="el-icon-user-solid" />
+      <el-avatar :size="80" :src="userForm.photo" class="user-avatar">
+        {{ userInitial }}
+      </el-avatar>
       <div class="user-details">
         <h2>{{ user?.username }}</h2>
         <p>ID: {{ user?.id }}</p>
@@ -167,6 +169,13 @@ const availableRoles = computed(() => {
   return allRoles.filter(role => userRoles.includes(role.name) && role.name !== currentRole);
 });
 
+const userInitial = computed(() => {
+  if (userForm.value && userForm.value.username) {
+    return userForm.value.username.charAt(0).toUpperCase();
+  }
+  return '';
+});
+
 const switchRole = (path: string) => {
   router.push(path);
 };
@@ -248,6 +257,13 @@ const handleUpdateProfile = async () => {
   background-color: var(--el-color-primary);
   color: white;
   padding: 40px 20px;
+}
+
+.user-avatar {
+  background-color: #e0e0e0;
+  color: #616161;
+  font-size: 2.5rem;
+  font-weight: 500;
 }
 
 .user-details h2 {
