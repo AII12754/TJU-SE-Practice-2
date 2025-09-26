@@ -23,7 +23,7 @@
         <Building :size="24" />
         <span>店铺管理</span>
       </router-link>
-      <router-link to="/mobile/admin/profile" class="nav-item">
+      <router-link to="/mobile/admin/user-profile" class="nav-item">
         <User :size="24" />
         <span>我的</span>
       </router-link>
