@@ -12,7 +12,7 @@
     <!-- Action List -->
     <div class="action-list">
       <el-menu>
-        <el-menu-item index="1" @click="navigateTo('/mobile/profile/edit')">
+        <el-menu-item index="1" @click="showEditProfileDialog = true">
           <el-icon><User /></el-icon>
           <span>我的资料</span>
         </el-menu-item>
@@ -65,6 +65,25 @@
         <el-button type="primary" @click="handleUpdatePassword">确认</el-button>
       </template>
     </el-dialog>
+
+    <!-- Edit Profile Dialog -->
+    <el-dialog v-model="showEditProfileDialog" title="编辑我的资料" width="90%">
+      <el-form :model="userForm" label-position="top">
+        <el-form-item label="用户名">
+          <el-input v-model="userForm.username" disabled />
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="userForm.email" />
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="userForm.phone" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="showEditProfileDialog = false">取消</el-button>
+        <el-button type="primary" @click="handleUpdateProfile">保存更改</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -72,13 +91,14 @@
 import { ref, watch, reactive, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '../store/auth';
-import { getUserById, updateUserPassword } from '../api/user';
+import { getUserById, updateUserPassword, updateUser } from '../api/user';
 import { ElMessage, type FormInstance } from 'element-plus';
 import { User, Lock, ShoppingCart, UserCog } from 'lucide-vue-next';
 import type { Person } from '../api/types';
 
 const loading = ref(false);
 const showPasswordDialog = ref(false);
+const showEditProfileDialog = ref(false);
 const authStore = useAuthStore();
 const router = useRouter();
 const route = useRoute();
@@ -151,10 +171,6 @@ const switchRole = (path: string) => {
   router.push(path);
 };
 
-const navigateTo = (path: string) => {
-  router.push(path);
-};
-
 const handleUpdatePassword = async () => {
   if (!passwordFormRef.value || !user) return;
 
@@ -187,6 +203,34 @@ const handleUpdatePassword = async () => {
 const handleLogout = () => {
   authStore.logout();
   router.push('/login');
+};
+
+const handleUpdateProfile = async () => {
+  if (!user || !user.id) {
+    ElMessage.error('用户数据不可用。');
+    return;
+  }
+  loading.value = true;
+  try {
+    const payload: Person = {
+      ...user,
+      ...userForm.value,
+      username: user.username,
+    };
+
+    const response = await updateUser(user.id, payload);
+    if (response.success) {
+      authStore.setUser(response.data);
+      ElMessage.success('个人资料更新成功！');
+      showEditProfileDialog.value = false;
+    } else {
+      throw new Error(response.message || '更新个人资料失败');
+    }
+  } catch (error: any) {
+    ElMessage.error(error.message || '发生错误');
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
