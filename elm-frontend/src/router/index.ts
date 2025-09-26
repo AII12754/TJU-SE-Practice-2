@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
         redirect: { name: 'UserProfile' },
         children: [
           {
-            path: 'details',
+            path: 'user-profile',
             name: 'UserProfile',
             component: () => import('../views/customer/Profile/UserProfile.vue'),
             meta: { title: '我的信息' },
