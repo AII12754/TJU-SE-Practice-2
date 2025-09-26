@@ -32,13 +32,14 @@ export const submitBusinessApplication = async (applicationData: BusinessApplica
   return response.data;
 };
 
+import type { HttpResult } from './types';
+
 /**
  * Retrieves all business applications (for admins).
  * @returns A list of all business applications.
  */
-export const getBusinessApplications = async (): Promise<BusinessApplication[]> => {
-  const response = await request.get('/applications/business');
-  return response.data;
+export const getBusinessApplications = async (): Promise<HttpResult<BusinessApplication[]>> => {
+  return request.get('/applications/business');
 };
 
 /**

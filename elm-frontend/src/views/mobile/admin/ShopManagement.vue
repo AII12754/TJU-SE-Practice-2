@@ -50,7 +50,11 @@ const statusFilter = ref('');
 const fetchApplications = async () => {
   try {
     const response = await getBusinessApplications();
-    applications.value = response;
+    if (response.success) {
+      applications.value = response.data;
+    } else {
+      ElMessage.error(response.message || '获取申请列表失败');
+    }
   } catch (error) {
     ElMessage.error('获取申请列表失败');
     console.error('获取申请列表失败:', error);

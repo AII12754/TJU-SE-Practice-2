@@ -96,12 +96,16 @@ const columns = [
 const fetchApplications = async () => {
   try {
     const response = await getBusinessApplications();
-    applications.value = (response || []).sort((a, b) => {
-      if (a.createTime && b.createTime) {
-        return new Date(b.createTime).getTime() - new Date(a.createTime).getTime();
-      }
-      return 0;
-    });
+    if (response.success) {
+      applications.value = (response.data || []).sort((a, b) => {
+        if (a.createTime && b.createTime) {
+          return new Date(b.createTime).getTime() - new Date(a.createTime).getTime();
+        }
+        return 0;
+      });
+    } else {
+      ElMessage.error(response.message || '获取申请列表失败');
+    }
   } catch (error) {
     ElMessage.error('获取申请列表失败');
     console.error('获取申请列表失败:', error);

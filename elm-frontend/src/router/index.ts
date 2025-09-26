@@ -170,6 +170,12 @@ const mobileRoutes: RouteRecordRaw = {
       meta: { title: '我的', requiresAuth: true, roles: ['CUSTOMER'] },
     },
     {
+      path: 'profile/user-info',
+      name: 'MobileUserInfo',
+      component: () => import('../views/mobile/customer/Profile/UserInfo.vue'),
+      meta: { title: '我的资料', requiresAuth: true, roles: ['CUSTOMER'] },
+    },
+    {
       path: 'profile/addresses',
       name: 'MobileAddressManagement',
       component: () => import('../views/mobile/customer/Profile/AddressManagement.vue'),
@@ -241,7 +247,8 @@ const mobileAdminRoutes: RouteRecordRaw = {
       { path: 'users', name: 'MobileUserManagement', component: () => import('../views/mobile/admin/UserManagement.vue'), meta: { title: '用户管理' } },
       { path: 'businesses', name: 'MobileMerchantManagement', component: () => import('../views/mobile/admin/MerchantManagement.vue'), meta: { title: '商家管理' } },
       { path: 'shops', name: 'MobileShopManagement', component: () => import('../views/mobile/admin/ShopManagement.vue'), meta: { title: '店铺管理' } },
-      { path: 'user-profile', name: 'MobileAdminProfile', component: () => import('../views/mobile/admin/UserProfile.vue'), meta: { title: '我的资料' } }
+      { path: 'user-profile', name: 'MobileAdminProfile', component: () => import('../views/mobile/admin/UserProfile.vue'), meta: { title: '我的' } },
+      { path: 'user-info', name: 'MobileAdminUserInfo', component: () => import('../views/mobile/admin/UserInfo.vue'), meta: { title: '我的资料' } }
     ]
 };
 
