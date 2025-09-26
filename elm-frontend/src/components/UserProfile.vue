@@ -12,7 +12,7 @@
     <!-- Action List -->
     <div class="action-list">
       <el-menu>
-        <el-menu-item index="1" @click="navigateTo('/mobile/profile/user-profile')">
+        <el-menu-item index="1" @click="navigateTo('/mobile/profile/edit')">
           <el-icon><User /></el-icon>
           <span>我的资料</span>
         </el-menu-item>
