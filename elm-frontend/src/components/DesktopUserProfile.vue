@@ -241,8 +241,7 @@ const handleUpdateProfile = async () => {
 
 <style scoped>
 .desktop-user-profile {
-  padding: 20px;
-  background-color: #f5f7fa;
+  /* The padding and background-color are removed to inherit from the parent layout */
 }
 
 .profile-sidebar {
